@@ -104,8 +104,9 @@ BODY=`jq -n --arg description $DESCRIPTION --arg homepage $WEBSITE '{description
 curl \
     -X PATCH \
     -H "Accept: application/vnd.github.v3+json" \
+    -H "Content-Type: application/json" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
-    -d $BODY \
+    -d "$BODY" \
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
 echo "Updating topics for [${GITHUB_REPOSITORY}]"
