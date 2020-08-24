@@ -25,7 +25,9 @@ echo " "
 # find username and repo name
 REPO_INFO=($(echo $GITHUB_REPOSITORY | tr "/" "\n"))
 USERNAME=${REPO_INFO[0]}
+echo "Username: [$USERNAME]"
 REPO_NAME=${REPO_INFO[1]}
+echo "Repo name: [$REPO_NAME]"
 
 # initalize git
 echo "Intiializing git"
@@ -36,8 +38,6 @@ echo "Git initialized"
 
 echo " "
 
-echo "###[group] $REPO_TYPE"
-
 # clone the repo
 REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 GIT_PATH="${TEMP_PATH}${GITHUB_REPOSITORY}"
@@ -47,15 +47,18 @@ git clone --quiet --no-hardlinks --no-tags --depth 1 $REPO_URL ${GITHUB_REPOSITO
 cd $GIT_PATH
 
 # verify path exists
-if [ ! test -f "$FILE_PATH" ]; then 
+echo "Checking that [${FILE_PATH}] exists"
+if [ ! -f "$FILE_PATH" ]; then 
     echo "Path does not exist: [${FILE_PATH}]"
     return
 fi
 
-# default parameters
+# default the parameters
 DESCRIPTION=""
 WEBSITE=""
 TOPICS=""
+
+echo "###[group] $REPO_TYPE"
 
 # determine repo type
 if [ "$REPO_TYPE" == "npm" ]; then

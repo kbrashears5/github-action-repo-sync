@@ -21,7 +21,7 @@ on:
     - cron: 0 0 * * *
 
 jobs:
-  file_sync:
+  repo_sync:
     runs-on: ubuntu-latest
     steps:
       - name: Fetching Local Repository
