@@ -100,11 +100,12 @@ echo " "
 
 # update the repository with the values that were set
 echo "Updating description and homepage for [${GITHUB_REPOSITORY}]"
+BODY=`jq -n --arg description $DESCRIPTION --arg homepage $WEBSITE '{description:$description,homepage:$homepage}'`
 curl \
     -X PATCH \
     -H "Accept: application/vnd.github.v3+json" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
-    -d "{\"description\":\"$DESCRIPTION\",\"homepage\":\"$WEBSITE\"}" \
+    -d $BODY \
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
 echo "Updating topics for [${GITHUB_REPOSITORY}]"
