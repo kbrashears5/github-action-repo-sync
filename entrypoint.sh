@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Repository: $1"
+echo "Repository: [$GITHUB_REPOSITORY]"
 
 # log inputs
 echo "Inputs"
@@ -22,6 +22,11 @@ echo "---------------------------------------------"
 
 echo " "
 
+# find username and repo name
+REPO_INFO=($(echo $GITHUB_REPOSITORY | tr "/" "\n"))
+USERNAME=${REPO_INFO[0]}
+REPO_NAME=${REPO_INFO[1]}
+
 # initalize git
 echo "Intiializing git"
 git config --system core.longpaths true
@@ -34,10 +39,10 @@ echo " "
 echo "###[group] $REPO_TYPE"
 
 # clone the repo
-REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${repository}.git"
-GIT_PATH="${TEMP_PATH}${repository}"
+REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+GIT_PATH="${TEMP_PATH}${GITHUB_REPOSITORY}"
 echo "Cloning [$REPO_URL] to [$GIT_PATH]"
-git clone --quiet --no-hardlinks --no-tags --depth 1 $REPO_URL ${repository}
+git clone --quiet --no-hardlinks --no-tags --depth 1 $REPO_URL ${GITHUB_REPOSITORY}
 
 cd $GIT_PATH
 
@@ -71,3 +76,21 @@ elif [ "$REPO_TYPE" == "nuget" ]
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
 fi
+
+# update the repository with the values that were set
+echo "Updating repository [${GITHUB_REPOSITORY}]"
+DATA='{"description":"$1","homepage":"$2"}'
+curl \
+    -X PATCH \
+    -H "Accept: application/vnd.github.v3+json" \
+    -d "$DATA" -- "$DESCRIPTION" "$WEBSITE" \
+    -u ${USERNAME}:${GITHUB_TOKEN} \
+    ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
+
+echo "Updating topics for [${GITHUB_REPOSITORY}]"
+curl \
+    -X PUT \
+    -H "Accept: application/vnd.github.mercy-preview+json" \
+    -u ${USERNAME}:${GITHUB_TOKEN} \
+    -d '{"names":["temp"]}' \
+    ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/topics
