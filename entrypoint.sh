@@ -62,13 +62,15 @@ echo "###[group] $REPO_TYPE"
 
 # determine repo type
 if [ "$REPO_TYPE" == "npm" ]; then
+    echo "NPM"
     # read in the variables from package.json
     echo "Parsing ${FILE_PATH}"
     DESCRIPTION=`jq '.description' ${FILE_PATH}`
     WEBSITE=`jq '.homepage' ${FILE_PATH}`
     TOPICS=`jq '.keywords' ${FILE_PATH}`
 
-elif [ "$REPO_TYPE" == "nuget" ]
+elif [ "$REPO_TYPE" == "nuget" ]; then
+    echo "NuGet"
     # TODO
     # read in file and store in variable
     # VALUE=`cat ${FILE_PATH}`
