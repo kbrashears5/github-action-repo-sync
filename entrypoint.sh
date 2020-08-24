@@ -62,11 +62,8 @@ echo "###[group] $REPO_TYPE"
 
 # determine repo type
 if [ "$REPO_TYPE" == "npm" ]; then
-    # install jq to parse json
-    sudo apt-get update && sudo apt-get -y install jq
-    #sudo chmod +x /usr/bin/jq # MAYBE need this
-
-    # read in the description
+    # read in the variables from package.json
+    echo "Parsing ${FILE_PATH}"
     DESCRIPTION=`jq '.description' ${FILE_PATH}`
     WEBSITE=`jq '.homepage' ${FILE_PATH}`
     TOPICS=`jq '.keywords' ${FILE_PATH}`
@@ -79,6 +76,10 @@ elif [ "$REPO_TYPE" == "nuget" ]
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
 fi
+
+echo "Description: ${DESCRIPTION}"
+echo "Website: ${WEBSITE}"
+echo "Topics: ${TOPICS}"
 
 # update the repository with the values that were set
 echo "Updating repository [${GITHUB_REPOSITORY}]"
