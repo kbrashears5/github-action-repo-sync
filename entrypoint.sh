@@ -79,9 +79,13 @@ else
     echo "Unsupported repo type: [${REPO_TYPE}]"
 fi
 
+echo " "
+
 echo "Description: ${DESCRIPTION}"
 echo "Website: ${WEBSITE}"
 echo "Topics: ${TOPICS}"
+
+echo " "
 
 # update the repository with the values that were set
 echo "Updating description and homepage for [${GITHUB_REPOSITORY}]"
@@ -90,7 +94,7 @@ curl \
     -H "Accept: application/vnd.github.v3+json" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
     -d "{\"description\":\"$DESCRIPTION\",\"homepage\":\"$WEBSITE\"}" \
-    -v
+    -v \
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
 echo "Updating topics for [${GITHUB_REPOSITORY}]"
