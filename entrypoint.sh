@@ -84,12 +84,11 @@ echo "Website: ${WEBSITE}"
 echo "Topics: ${TOPICS}"
 
 # update the repository with the values that were set
-echo "Updating repository [${GITHUB_REPOSITORY}]"
-DATA='{"description":"$1","homepage":"$2"}'
+echo "Updating description and homepage for [${GITHUB_REPOSITORY}]"
 curl \
     -X PATCH \
     -H "Accept: application/vnd.github.v3+json" \
-    -d "$DATA" -- "$DESCRIPTION" "$WEBSITE" \
+    -d "{\"description\":\"${DESCRIPTION}\",\"homepage\":\"${WEBSITE}\"}" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
