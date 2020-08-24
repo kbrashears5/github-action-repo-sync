@@ -88,8 +88,9 @@ echo "Updating description and homepage for [${GITHUB_REPOSITORY}]"
 curl \
     -X PATCH \
     -H "Accept: application/vnd.github.v3+json" \
-    -d "{\"description\":\"$DESCRIPTION\",\"homepage\":\"$WEBSITE\"}" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
+    -d "{\"description\":\"$DESCRIPTION\",\"homepage\":\"$WEBSITE\"}" \
+    -v
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
 echo "Updating topics for [${GITHUB_REPOSITORY}]"
