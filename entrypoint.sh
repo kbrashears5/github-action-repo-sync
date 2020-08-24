@@ -81,6 +81,17 @@ fi
 
 echo " "
 
+# change nulls to empty strings
+if [ "$DESCRIPTION" == null ]; then
+    DESCRIPTION=""
+fi
+if [ "$WEBSITE" == null ]; then
+    WEBSITE=""
+fi
+if [ "$TOPICS" == null ]; then
+    TOPICS=""
+fi
+
 echo "Description: ${DESCRIPTION}"
 echo "Website: ${WEBSITE}"
 echo "Topics: ${TOPICS}"
@@ -94,7 +105,6 @@ curl \
     -H "Accept: application/vnd.github.v3+json" \
     -u ${USERNAME}:${GITHUB_TOKEN} \
     -d "{\"description\":\"$DESCRIPTION\",\"homepage\":\"$WEBSITE\"}" \
-    -v \
     ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 
 echo "Updating topics for [${GITHUB_REPOSITORY}]"
