@@ -86,7 +86,7 @@ echo " "
 echo "Description: ${DESCRIPTION}"
 if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
     echo "Updating description for [${GITHUB_REPOSITORY}]"
-    jq -n --arg description "$DESCRIPTION" '{description:$description}' |  curl -d @- \
+    jq -n -r -c --arg description $DESCRIPTION '{description:$description}' |  curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
