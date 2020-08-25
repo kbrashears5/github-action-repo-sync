@@ -81,38 +81,39 @@ fi
 
 echo " "
 
-# change nulls to empty strings
-if [ "$DESCRIPTION" == null ]; then
-    DESCRIPTION=""
-fi
-if [ "$WEBSITE" == null ]; then
-    WEBSITE=""
-fi
-if [ "$TOPICS" == null ]; then
-    TOPICS=""
-fi
-
 echo "Description: ${DESCRIPTION}"
 echo "Website: ${WEBSITE}"
 echo "Topics: ${TOPICS}"
 
-echo " "
-
 # update the repository with the values that were set
-echo "Updating description and homepage for [${GITHUB_REPOSITORY}]"
-BODY=`jq -n --arg description $DESCRIPTION --arg homepage $WEBSITE '{description:$description,homepage:$homepage}'`
-curl \
-    -X PATCH \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Content-Type: application/json" \
-    -u ${USERNAME}:${GITHUB_TOKEN} \
-    -d "$BODY" \
-    ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
-
-echo "Updating topics for [${GITHUB_REPOSITORY}]"
-curl \
-    -X PUT \
-    -H "Accept: application/vnd.github.mercy-preview+json" \
-    -u ${USERNAME}:${GITHUB_TOKEN} \
-    -d '{"names":["temp"]}' \
-    ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/topics
+if [ "$DESCRIPTION" != null -o "$DESCRIPTION" != "" ]; then
+    echo "Updating description for [${GITHUB_REPOSITORY}]"
+    BODY=`jq -n --arg description $DESCRIPTION '{description:$description}'`
+    curl \
+        -X PATCH \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Content-Type: application/json" \
+        -u ${USERNAME}:${GITHUB_TOKEN} \
+        -d "$BODY" \
+        ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
+fi
+if [ "$WEBSITE" != null -o "$WEBSITE" != "" ]; then
+    echo "Updating homepage for [${GITHUB_REPOSITORY}]"
+    BODY=`jq -n --arg homepage $WEBSITE '{homepage:$homepage}'`
+    curl \
+        -X PATCH \
+        -H "Accept: application/vnd.github.v3+json" \
+        -H "Content-Type: application/json" \
+        -u ${USERNAME}:${GITHUB_TOKEN} \
+        -d "$BODY" \
+        ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
+fi
+if [ "$TOPICS" != null -o "$TOPICS" != "" ]; then
+    echo "Updating topics for [${GITHUB_REPOSITORY}]"
+    curl \
+        -X PUT \
+        -H "Accept: application/vnd.github.mercy-preview+json" \
+        -u ${USERNAME}:${GITHUB_TOKEN} \
+        -d '{"names":["temp"]}' \
+        ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/topics
+fi
