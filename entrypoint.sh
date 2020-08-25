@@ -86,22 +86,24 @@ echo " "
 echo "Description: ${DESCRIPTION}"
 if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
     echo "Updating description for [${GITHUB_REPOSITORY}]"
-    jq -n --arg description "$DESCRIPTION" '{description:"$description"}' |  curl -d @- \
+    jq -n --arg description "$DESCRIPTION" '{description:$description}' |  curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
         -u ${USERNAME}:${GITHUB_TOKEN} \
+        --silent \
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
 echo "Website: ${WEBSITE}"
 if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
     echo "Updating homepage for [${GITHUB_REPOSITORY}]"
-    jq -n --arg homepage "$WEBSITE" '{homepage:"$homepage"}' | curl -d @- \
+    jq -n --arg homepage "$WEBSITE" '{homepage:$homepage}' | curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
         -u ${USERNAME}:${GITHUB_TOKEN} \
+        --silent \
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
