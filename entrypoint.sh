@@ -110,7 +110,7 @@ fi
 echo "Topics: ${TOPICS}"
 if [ "$TOPICS" != null -a "$TOPICS" != "" ]; then
     echo "Updating topics for [${GITHUB_REPOSITORY}]"
-    jq -n --arg topics "$TOPICS" '{names:$topics}' | curl -d @- \
+    jq -n --argjson topics "$TOPICS" '{names:$topics}' | curl -d @- \
         -X PUT \
         -H "Accept: application/vnd.github.mercy-preview+json" \
         -u ${USERNAME}:${GITHUB_TOKEN} \
