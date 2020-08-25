@@ -86,9 +86,9 @@ echo "Website: ${WEBSITE}"
 echo "Topics: ${TOPICS}"
 
 # update the repository with the values that were set
-if [ "$DESCRIPTION" != null -o "$DESCRIPTION" != "" ]; then
+if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
     echo "Updating description for [${GITHUB_REPOSITORY}]"
-    jq -n --arg description $DESCRIPTION '{description:"$description"}' |  curl -d @- \
+    jq -n --arg description "$DESCRIPTION" '{description:$description}' |  curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
@@ -96,9 +96,9 @@ if [ "$DESCRIPTION" != null -o "$DESCRIPTION" != "" ]; then
         -d "$BODY" \
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
-if [ "$WEBSITE" != null -o "$WEBSITE" != "" ]; then
+if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
     echo "Updating homepage for [${GITHUB_REPOSITORY}]"
-    jq -n --arg homepage $WEBSITE '{homepage:"$homepage"}' | curl -d @- \
+    jq -n --arg homepage "$WEBSITE" '{homepage:$homepage}' | curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
@@ -106,7 +106,7 @@ if [ "$WEBSITE" != null -o "$WEBSITE" != "" ]; then
         -d "$BODY" \
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
-if [ "$TOPICS" != null -o "$TOPICS" != "" ]; then
+if [ "$TOPICS" != null -a "$TOPICS" != "" ]; then
     echo "Updating topics for [${GITHUB_REPOSITORY}]"
     curl \
         -X PUT \
