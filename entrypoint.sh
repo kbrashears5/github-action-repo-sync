@@ -88,7 +88,7 @@ echo "Topics: ${TOPICS}"
 # update the repository with the values that were set
 if [ "$DESCRIPTION" != null -o "$DESCRIPTION" != "" ]; then
     echo "Updating description for [${GITHUB_REPOSITORY}]"
-    jq -n --arg description $DESCRIPTION '{description:$description}' |  curl -d @- \
+    jq -n --arg description $DESCRIPTION '{description:"$description"}' |  curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
@@ -98,7 +98,7 @@ if [ "$DESCRIPTION" != null -o "$DESCRIPTION" != "" ]; then
 fi
 if [ "$WEBSITE" != null -o "$WEBSITE" != "" ]; then
     echo "Updating homepage for [${GITHUB_REPOSITORY}]"
-    jq -n --arg homepage $WEBSITE '{homepage:$homepage}' | curl -d @- \
+    jq -n --arg homepage $WEBSITE '{homepage:"$homepage"}' | curl -d @- \
         -X PATCH \
         -H "Accept: application/vnd.github.v3+json" \
         -H "Content-Type: application/json" \
