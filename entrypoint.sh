@@ -65,8 +65,8 @@ if [ "$REPO_TYPE" == "npm" ]; then
     echo "NPM"
     # read in the variables from package.json
     echo "Parsing ${FILE_PATH}"
-    DESCRIPTION=`jq '.description' ${FILE_PATH}`
-    WEBSITE=`jq '.homepage' ${FILE_PATH}`
+    DESCRIPTION=`jq -r '.description' ${FILE_PATH}`
+    WEBSITE=`jq -r '.homepage' ${FILE_PATH}`
     TOPICS=`jq '.keywords' ${FILE_PATH}`
 
 elif [ "$REPO_TYPE" == "nuget" ]; then
