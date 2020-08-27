@@ -1,4 +1,4 @@
-name: 'Repo Sync'
+name: 'Repo Metadata Sync'
 description: 'Github Action to sync repo metadata from code to repo'
 author: 'kbrashears5'
 branding:
