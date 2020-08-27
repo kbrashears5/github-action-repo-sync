@@ -74,7 +74,7 @@ elif [ "$REPO_TYPE" == "nuget" ]; then
     DESCRIPTION=($(grep -oP '(?<=<Description>)[^<]+' "${FILE_PATH}"))
     WEBSITE=($(grep -oP '(?<=<RepositoryUrl>)[^<]+' "${FILE_PATH}"))
     TOPICS_STRING=($(grep -oP '(?<=<PackageTags>)[^<]+' "${FILE_PATH}"))
-    TOPICS=`printf '%s\n' "${TESTS[@]}" | jq -R . | jq -s .`
+    TOPICS=`printf '%s\n' "${TOPICS_STRING[@]}" | jq -R . | jq -s .`
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
 fi
