@@ -8,6 +8,9 @@ RUN apk add git
 # add jq for json parsing
 RUN apk add jq
 
+# add grep for xml parsing
+RUN apk add grep
+
 # add curl for github api commands
 RUN apk add curl
 

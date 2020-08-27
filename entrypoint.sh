@@ -71,10 +71,10 @@ if [ "$REPO_TYPE" == "npm" ]; then
 
 elif [ "$REPO_TYPE" == "nuget" ]; then
     echo "NuGet"
-    # TODO
-    # read in file and store in variable
-    # VALUE=`cat ${FILE_PATH}`
-    # echo $VALUE
+    DESCRIPTION=`($(grep -oP '(?<=<Description>)[^<]+' "${FILE_PATH}"))`
+    WEBSITE=`($(grep -oP '(?<=<RepositoryUrl>)[^<]+' "${FILE_PATH}"))`
+    TOPICS_STRING=`($(grep -oP '(?<=<PackageTags>)[^<]+' "${FILE_PATH}"))`
+    TOPICS=`printf '%s\n' "${TESTS[@]}" | jq -R . | jq -s .`
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
 fi
