@@ -78,12 +78,13 @@ elif [ "$REPO_TYPE" == "nuget" ]; then
     TOPICS=`printf '%s\n' "${TOPICS_ARRAY[@]}" | jq -R . | jq -s .`
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
+    exit 1
 fi
 
-echo " "
 
 # update the repository with the values that were set
 
+echo " "
 echo "Description: ${DESCRIPTION}"
 if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
     echo "Updating description for [${GITHUB_REPOSITORY}]"
@@ -97,6 +98,7 @@ if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
+echo " "
 echo "Website: ${WEBSITE}"
 if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
     echo "Updating homepage for [${GITHUB_REPOSITORY}]"
@@ -110,6 +112,7 @@ if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
+echo " "
 echo "Topics: ${TOPICS}"
 if [ "$TOPICS" != null -a "$TOPICS" != "" ]; then
     echo "Updating topics for [${GITHUB_REPOSITORY}]"
