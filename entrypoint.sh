@@ -12,6 +12,11 @@ echo "Repo type    : $REPO_TYPE"
 FILES=($RAW_FILES)
 echo "Path         : $FILE_PATH"
 
+if [ "$GITHUB_TOKEN" == null -o "$GITHUB_TOKEN" == "" ]; then
+    echo "Token was not provided"
+    exit 1
+fi
+
 # set temp path
 TEMP_PATH="/ghars/"
 cd /
@@ -58,11 +63,13 @@ DESCRIPTION=""
 WEBSITE=""
 TOPICS=""
 
+echo " "
+
 echo "###[group] $REPO_TYPE"
 
 # determine repo type
 if [ "$REPO_TYPE" == "npm" ]; then
-    echo "NPM"
+    echo "Repo type: NPM"
     # read in the variables from package.json
     echo "Parsing ${FILE_PATH}"
     DESCRIPTION=`jq -r '.description' ${FILE_PATH}`
@@ -70,7 +77,7 @@ if [ "$REPO_TYPE" == "npm" ]; then
     TOPICS=`jq '.keywords' ${FILE_PATH}`
 
 elif [ "$REPO_TYPE" == "nuget" ]; then
-    echo "NuGet"
+    echo "Repo type: NuGet"
     DESCRIPTION=($(grep -oP '(?<=<Description>)[^<]+' "${FILE_PATH}"))
     WEBSITE=($(grep -oP '(?<=<RepositoryUrl>)[^<]+' "${FILE_PATH}"))
     TOPICS_STRING=($(grep -oP '(?<=<PackageTags>)[^<]+' "${FILE_PATH}"))
@@ -81,9 +88,7 @@ else
     exit 1
 fi
 
-
-# update the repository with the values that were set
-
+# update the description
 echo " "
 echo "Description: ${DESCRIPTION}"
 if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
@@ -98,6 +103,7 @@ if [ "$DESCRIPTION" != null -a "$DESCRIPTION" != "" ]; then
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
+# update the homepage
 echo " "
 echo "Website: ${WEBSITE}"
 if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
@@ -112,6 +118,7 @@ if [ "$WEBSITE" != null -a "$WEBSITE" != "" ]; then
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}
 fi
 
+# update the topics
 echo " "
 echo "Topics: ${TOPICS}"
 if [ "$TOPICS" != null -a "$TOPICS" != "" ]; then
