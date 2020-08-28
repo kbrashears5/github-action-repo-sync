@@ -38,10 +38,27 @@ jobs:
 | --- | --- | --- |
 | TYPE | true | Type of repo. See below for supported repo types |
 | PATH | true | Path to the repo type's metadata file |
-| TOKEN | true | Personal Access Token with Repo scope
+| TOKEN | true | Personal Access Token with Repo scope |
 
 ## Supported Repo Types
-| Repo Type | File |
-| --- | --- |
-| npm | package.json |
-| nuget | ProjectName.csproj |
+| Repo Type | File | Description |
+| --- | --- | --- |
+| npm | package.json | package.json for repo |
+| nuget | ProjectName.csproj | csproj file for project |
+
+## Tips
+For repo types that aren't listed above (like this one), you can still use this action, just have to get creative.
+
+For example (and I would recommend), you can create a file called `metadata.json`, choose the npm type, and make the file look like so:
+```json
+{
+  "description": "Repo description",
+  "homepage": "https://github.com/kbrashears5/github-action-repo-sync",
+  "keywords": [
+    "sync",
+    "repo",
+    "metadata"
+  ]
+}
+```
+For example, see `.github/workflows/repo-sync.yml` & `metadata.json` in this repo
