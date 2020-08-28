@@ -6,6 +6,11 @@
         "repo",
         "metadata",
         "npm",
-        "nuget"
+        "nuget",
+        "description",
+        "homepage",
+        "website",
+        "topics",
+        "keywords"
     ]
 }
