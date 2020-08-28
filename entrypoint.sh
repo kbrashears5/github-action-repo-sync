@@ -55,7 +55,7 @@ cd $GIT_PATH
 echo "Checking that [${FILE_PATH}] exists"
 if [ ! -f "$FILE_PATH" ]; then 
     echo "Path does not exist: [${FILE_PATH}]"
-    return
+    exit 1
 fi
 
 # default the parameters
