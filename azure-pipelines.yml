@@ -9,12 +9,24 @@ resources:
       name: kbrashears5/yaml
       endpoint: kbrashears5
 
+# define build triggers (https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=example#trigger)
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - entrypoint.sh
+
 # define pull request triggers (https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers)
 pr:
   autoCancel: true
   branches:
     include:
     - master
+  paths:
+    include:
+    - entrypoint.sh
 
 # build and create npm package (https://github.com/kbrashears5/yaml/blob/master/templates/build-node.yml)
 stages:
