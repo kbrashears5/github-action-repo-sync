@@ -3,6 +3,9 @@
 <div align="center">
     
 <b>Github Action to sync files across repos</b>
+
+[![Build Status](https://dev.azure.com/kbrashears5/github/_apis/build/status/kbrashears5.github-action-repo-sync?branchName=master)](https://dev.azure.com/kbrashears5/github/_build/latest?definitionId=27&branchName=master)
+
 </div>
 
 # Use Cases
