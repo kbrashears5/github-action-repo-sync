@@ -18,7 +18,3 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.TYPE }}
-    - ${{ inputs.PATH }}
-    - ${{ inputs.TOKEN }}

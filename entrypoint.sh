@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# remember last error code
+trap 'STATUS=$?' ERR
+
+# problem matcher must exist in workspace
+cp /error-matcher.json $HOME/file-sync-error-matcher.json
+echo "::add-matcher::$HOME/file-sync-error-matcher.json"
+
 echo "Repository: [$GITHUB_REPOSITORY]"
 
 # log inputs
@@ -65,7 +72,7 @@ TOPICS=""
 
 echo " "
 
-echo "###[group] $REPO_TYPE"
+echo "Repo type: ${REPO_TYPE}"
 
 # determine repo type
 if [ "$REPO_TYPE" == "npm" ]; then
@@ -131,3 +138,5 @@ if [ "$TOPICS" != null -a "$TOPICS" != "" ]; then
         --silent \
         ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/topics
 fi
+
+exit $STATUS
