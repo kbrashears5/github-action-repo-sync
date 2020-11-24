@@ -8,6 +8,15 @@
                     "message": 1
                 }
             ]
+        },
+        {
+            "owner": "error2",
+            "pattern": [
+                {
+                    "regexp": "^(.*Validation Failed.*)$",
+                    "message": 2
+                }
+            ]
         }
     ]
 }
