@@ -14,7 +14,7 @@
             "pattern": [
                 {
                     "regexp": "^(.*Validation Failed.*)$",
-                    "message": 2
+                    "message": 1
                 }
             ]
         }
