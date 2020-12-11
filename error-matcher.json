@@ -13,7 +13,7 @@
             "owner": "error2",
             "pattern": [
                 {
-                    "regexp": "^(.*Validation Failed.*)$",
+                    "regexp": "^.*(Validation Failed.*)$",
                     "message": 1
                 }
             ]
