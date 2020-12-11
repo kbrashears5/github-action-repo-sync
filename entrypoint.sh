@@ -1,5 +1,7 @@
 #!/bin/bash
 
+STATUS=0
+
 # remember last error code
 trap 'STATUS=$?' ERR
 
