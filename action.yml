@@ -14,6 +14,14 @@ inputs:
   TOKEN:
     description: "Personal access token with Repo privileges"
     required: true
+  GIT_EMAIL:
+    description: 'Email to use for Git'
+    required: false
+    default: '41898282+github-actions[bot]@users.noreply.github.com'
+  GIT_USERNAME:
+    description: 'Username to use for Git'
+    required: false
+    default: 'github-actions[bot]'
 
 runs:
   using: 'docker'

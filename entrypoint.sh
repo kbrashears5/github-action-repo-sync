@@ -20,11 +20,10 @@ GITHUB_TOKEN="$INPUT_TOKEN"
 echo "Repo type    : $REPO_TYPE"
 FILES=($RAW_FILES)
 echo "Path         : $FILE_PATH"
-
-if [ "$GITHUB_TOKEN" == null -o "$GITHUB_TOKEN" == "" ]; then
-    echo "Token was not provided"
-    exit 1
-fi
+GIT_EMAIL="$INPUT_GIT_EMAIL"
+echo "Git email       : $GIT_EMAIL"
+GIT_USERNAME="$INPUT_GIT_USERNAME"
+echo "Git username    : $GIT_USERNAME"
 
 # set temp path
 TEMP_PATH="/ghars/"
@@ -47,7 +46,7 @@ echo "Repo name: [$REPO_NAME]"
 echo "Intiializing git"
 git config --system core.longpaths true
 git config --global core.longpaths true
-git config --global user.email "action-bot@github.com" && git config --global user.name "Github Action"
+git config --global user.email "$GIT_EMAIL" && git config --global user.name "$GIT_USERNAME"
 echo "Git initialized"
 
 echo " "
