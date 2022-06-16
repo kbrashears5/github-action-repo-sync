@@ -1,8 +1,8 @@
-<h1 align="center">github-action-file-sync</h1>
+<h1 align="center">github-action-repo-sync</h1>
 
 <div align="center">
     
-<b>Github Action to sync files across repos</b>
+<b>Github Action to sync repo metadata from code to repo</b>
 
 [![Build Status](https://dev.azure.com/kbrashears5/github/_apis/build/status/kbrashears5.github-action-repo-sync?branchName=master)](https://dev.azure.com/kbrashears5/github/_build/latest?definitionId=27&branchName=master)
 
