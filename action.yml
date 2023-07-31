@@ -1,5 +1,5 @@
 name: 'Repo Metadata Sync'
-description: 'Github Action to sync repo metadata from code to repo'
+description: 'Github Action to sync repo metadata (description, topics, homepage) from code (npm, nuget, python) to repo'
 author: 'kbrashears5'
 branding:
   icon: 'upload-cloud'
@@ -10,7 +10,7 @@ inputs:
     required: false
   PATH:
     description: 'Relative file path to the repos metadata file'
-    required: true
+    required: false
   TOKEN:
     description: "Personal access token with Repo privileges"
     required: true

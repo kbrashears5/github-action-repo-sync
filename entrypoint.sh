@@ -25,7 +25,16 @@ echo "Git email       : $GIT_EMAIL"
 GIT_USERNAME="$INPUT_GIT_USERNAME"
 echo "Git username    : $GIT_USERNAME"
 
-# TODO(GPT) infer file path if not provided
+# Infer file path if not provided
+if [ -z "$FILE_PATH" ]; then
+    if [ -f "package.json" ]; then
+        FILE_PATH="package.json"
+    elif [ -f "pyproject.toml" ]; then
+        FILE_PATH="pyproject.toml"
+    elif [ -f *.csproj ]; then
+        FILE_PATH=$(ls *.csproj | head -n 1)
+    fi
+fi
 
 # infer repo type if not provided
 if [[ -z "$REPO_TYPE" && "$FILE_PATH" == "package.json" ]]; then
