@@ -25,9 +25,13 @@ echo "Git email       : $GIT_EMAIL"
 GIT_USERNAME="$INPUT_GIT_USERNAME"
 echo "Git username    : $GIT_USERNAME"
 
+# TODO(GPT) infer file path if not provided
+
 # infer repo type if not provided
 if [[ -z "$REPO_TYPE" && "$FILE_PATH" == "package.json" ]]; then
     REPO_TYPE="npm"
+elif [[ -z "$REPO_TYPE" && "$FILE_PATH" == "pyproject.toml" ]]; then
+    REPO_TYPE="python"
 elif [[ -z "$REPO_TYPE" && "$FILE_PATH" == *".csproj" ]]; then
     REPO_TYPE="nuget"
 fi
@@ -49,7 +53,7 @@ echo "Username: [$USERNAME]"
 REPO_NAME=${REPO_INFO[1]}
 echo "Repo name: [$REPO_NAME]"
 
-# initalize git
+# initialize git
 echo "Intiializing git"
 git config --system core.longpaths true
 git config --global core.longpaths true
@@ -68,7 +72,7 @@ cd $GIT_PATH
 
 # verify path exists
 echo "Checking that [${FILE_PATH}] exists"
-if [ ! -f "$FILE_PATH" ]; then 
+if [ ! -f "$FILE_PATH" ]; then
     echo "Path does not exist: [${FILE_PATH}]"
     exit 1
 fi
@@ -90,6 +94,22 @@ if [ "$REPO_TYPE" == "npm" ]; then
     DESCRIPTION=`jq -r '.description' ${FILE_PATH}`
     WEBSITE=`jq -r '.homepage' ${FILE_PATH}`
     TOPICS=`jq '.keywords' ${FILE_PATH}`
+
+elif [ "$REPO_TYPE" == "python" ]; then
+    echo "Repo type: Python"
+    # read in the variables from pyproject.toml
+    echo "Parsing ${FILE_PATH}"
+    DESCRIPTION=`yq e '.tool.poetry.description' ${FILE_PATH}`
+    WEBSITE=`yq e '.tool.poetry.homepage' ${FILE_PATH}`
+    # yq responds with `null` if nothing exists, but we want to return an empty array
+    TOPICS=$(
+        result=$(yq -ojson eval '.tool.poetry.keywords' pyproject.toml)
+        if [ "$result" = "null" ]; then
+            echo "[]"
+        else
+            echo $result
+        fi
+    )
 
 elif [ "$REPO_TYPE" == "nuget" ]; then
     echo "Repo type: NuGet"

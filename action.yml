@@ -7,7 +7,7 @@ branding:
 inputs:
   TYPE:
     description: 'Type of repo (i.e. npm, nuget, etc. - see README for full list)'
-    required: true
+    required: false
   PATH:
     description: 'Relative file path to the repos metadata file'
     required: true
