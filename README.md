@@ -49,6 +49,8 @@ jobs:
 | npm | package.json | package.json for repo |
 | nuget | ProjectName.csproj | csproj file for project |
 
+Note if using standard `PATH` inputs the `TYPE` input is not required.
+
 ## Tips
 For repo types that aren't listed above (like this one), you can still use this action, just have to get creative.
 

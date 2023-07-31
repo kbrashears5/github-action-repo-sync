@@ -25,6 +25,13 @@ echo "Git email       : $GIT_EMAIL"
 GIT_USERNAME="$INPUT_GIT_USERNAME"
 echo "Git username    : $GIT_USERNAME"
 
+# infer repo type if not provided
+if [[ -z "$REPO_TYPE" && "$FILE_PATH" == "package.json" ]]; then
+    REPO_TYPE="npm"
+elif [[ -z "$REPO_TYPE" && "$FILE_PATH" == *".csproj" ]]; then
+    REPO_TYPE="nuget"
+fi
+
 # set temp path
 TEMP_PATH="/ghars/"
 cd /
