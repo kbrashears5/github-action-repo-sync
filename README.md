@@ -1,12 +1,7 @@
-<h1 align="center">github-action-repo-sync</h1>
+# github-action-repo-sync
+Github Action to sync repo metadata from code to repo
 
-<div align="center">
-    
-<b>Github Action to sync repo metadata from code to repo</b>
-
-[![Repo Metadata Sync](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-sync.yml/badge.svg)](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-sync.yml)
-
-</div>
+[![Repo Metadata Sync](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-metadata-sync.yml/badge.svg)](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-metadata-sync.yml)
 
 # Use Cases
 Keep the github metadata in sync with your code! Metadata is now configuration as code, and can be validated with a Pull Request.
