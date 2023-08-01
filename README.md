@@ -4,7 +4,7 @@
     
 <b>Github Action to sync repo metadata from code to repo</b>
 
-[![Build Status](https://dev.azure.com/kbrashears5/github/_apis/build/status/kbrashears5.github-action-repo-sync?branchName=master)](https://dev.azure.com/kbrashears5/github/_build/latest?definitionId=27&branchName=master)
+[![Repo Metadata Sync](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-sync.yml/badge.svg)](https://github.com/kbrashears5/github-action-repo-sync/actions/workflows/repo-sync.yml)
 
 </div>
 
@@ -19,7 +19,7 @@ name: Repo Sync
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: 0 0 * * *
 
@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetching Local Repository
-        uses: actions/checkout@master
-      - name: Repo Sync
-        uses: kbrashears5/github-action-repo-sync@v1.0.0
+        uses: actions/checkout@v3
+      - name: Repo Metadata Sync
+        uses: kbrashears5/github-action-repo-sync@v2.0.0
         with:
           TYPE: npm
           PATH: package.json
@@ -48,6 +48,7 @@ jobs:
 | --- | --- | --- |
 | npm | package.json | package.json for repo |
 | nuget | ProjectName.csproj | csproj file for project |
+| python | ProjectName.toml | toml file for project |
 
 ## Tips
 For repo types that aren't listed above (like this one), you can still use this action, just have to get creative.

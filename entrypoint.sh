@@ -42,7 +42,7 @@ echo "Username: [$USERNAME]"
 REPO_NAME=${REPO_INFO[1]}
 echo "Repo name: [$REPO_NAME]"
 
-# initalize git
+# initialize git
 echo "Intiializing git"
 git config --system core.longpaths true
 git config --global core.longpaths true
@@ -91,6 +91,22 @@ elif [ "$REPO_TYPE" == "nuget" ]; then
     TOPICS_STRING=$(grep -oP '(?<=<PackageTags>)[^<]+' "${FILE_PATH}")
     TOPICS_ARRAY=$(echo $TOPICS_STRING | tr ";" "\n")
     TOPICS=`printf '%s\n' "${TOPICS_ARRAY[@]}" | jq -R . | jq -s .`
+
+elif [ "$REPO_TYPE" == "python" ]; then
+    echo "Repo type: Python"
+    # read in the variables from pyproject.toml
+    echo "Parsing ${FILE_PATH}"
+    DESCRIPTION=`yq e '.tool.poetry.description' ${FILE_PATH}`
+    WEBSITE=`yq e '.tool.poetry.homepage' ${FILE_PATH}`
+    # yq responds with `null` if nothing exists, but we want to return an empty array
+    TOPICS=$(
+        result=$(yq -ojson eval '.tool.poetry.keywords' pyproject.toml)
+        if [ "$result" = "null" ]; then
+            echo "[]"
+        else
+            echo $result
+        fi
+    )
 else
     echo "Unsupported repo type: [${REPO_TYPE}]"
     exit 1

@@ -8,6 +8,9 @@ RUN apk add git
 # add jq for json parsing
 RUN apk add jq
 
+# for toml parsing
+RUN apk add --no-cache yq
+
 # add grep for xml parsing
 RUN apk add grep
 
