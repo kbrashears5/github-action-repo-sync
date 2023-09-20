@@ -29,8 +29,16 @@ jobs:
         with:
           TYPE: npm
           PATH: package.json
-          TOKEN: ${{ secrets.ACTIONS }}
+          TOKEN: ${{ secrets.GH_PERSONAL_TOKEN }}
 ```
+
+Note that the built in `secrets.github_token` does not have the necessary permissions to update the repo description. Use
+a personal access token instead:
+
+```shell
+gh secret set GH_PERSONAL_TOKEN --app actions --body ghp_the_key
+```
+
 ## Parameters
 | Parameter | Required | Description |
 | --- | --- | --- |
